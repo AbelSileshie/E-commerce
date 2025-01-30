@@ -10,7 +10,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Signup />} />
       <Route path="/verifyEmail" element={<VerifyEmail />} />
-      <Route path="/login" element={<Login />} />f
+      <Route path="/login" element={<Login />} />
       <Route path="*" element={<h1>Not Found</h1>} />
     </Routes>
   );
