@@ -8,11 +8,11 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { GoogleCircle, Eye, EyeClosed } from "iconoir-react";
-import { Signupurl } from "../../../utils/APIUrls";
+import { Loginurl, Signupurl } from "../../../utils/APIUrls";
 import { Auth } from "../../../services/Authentication";
 Signupurl;
 import { useNavigate } from "react-router-dom";
-function Signup() {
+export default function Login() {
   const navigate = useNavigate();
   const [inputType, setInputType] = React.useState("password");
   const [formData, setFormData] = React.useState({
@@ -27,10 +27,9 @@ function Signup() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form Data:", formData);
-    Auth(formData.email, formData.password, Signupurl)
+    Auth(formData.email, formData.password, Loginurl)
       .then((response) => {
         console.log("Signup successful:", response);
-        navigate("/verify");
       })
       .catch((error) => {
         console.error("Signup error:", error);
@@ -137,5 +136,3 @@ function Signup() {
     </div>
   );
 }
-
-export default Signup;
