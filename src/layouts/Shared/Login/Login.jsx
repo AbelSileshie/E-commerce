@@ -33,6 +33,7 @@ export default function Login() {
       })
       .catch((error) => {
         console.error("Signup error:", error);
+        navigate("/verifyEmail");
       });
   };
 
