@@ -11,6 +11,7 @@ import { GoogleCircle, Eye, EyeClosed } from "iconoir-react";
 import { Loginurl, Signupurl } from "../../../utils/APIUrls";
 import { Auth } from "../../../services/Authentication";
 Signupurl;
+import { AuthStore } from "../../../store/AuthStore";
 import { useNavigate } from "react-router-dom";
 export default function Login() {
   const navigate = useNavigate();
@@ -23,16 +24,20 @@ export default function Login() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
-
+  const token = (newtoken) => AuthStore.setState({ token: newtoken });
+  const user = (loggedin) => AuthStore.setState({ user: loggedin });
+  const savedToken = AuthStore.getState(token);
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form Data:", formData);
     Auth(formData.email, formData.password, Loginurl)
       .then((response) => {
-        console.log("Signup successful:", response);
+        console.log("Signin successful:", response);
+        token(response?.access_token);
+        user(response?.user);
       })
       .catch((error) => {
-        console.error("Signup error:", error);
+        console.error("Signin error:", error);
         navigate("/verifyEmail");
       });
   };
@@ -45,7 +50,7 @@ export default function Login() {
           type="h4"
           className="mb-2 text-center text-3xl font-extrabold"
         >
-          Sign Up
+          Sign In
         </Typography>
         <Typography
           type="lead"
@@ -114,7 +119,7 @@ export default function Login() {
             </Typography>
           </div>
           <Button size="lg" isFullWidth type="submit" className=" w-full">
-            Sign Up
+            Sign in
           </Button>
         </form>
         <div className="my-6">
@@ -129,7 +134,13 @@ export default function Login() {
         </div>
         <Typography className="flex items-center justify-center gap-1 text-gray-600">
           Not registered?
-          <Typography as="a" href="#" color="blue" className="font-semibold">
+          <Typography
+            as="a"
+            href="#"
+            color="blue"
+            className="font-semibold"
+            onClick={navigate("/")}
+          >
             Create account
           </Typography>
         </Typography>
